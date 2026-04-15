@@ -100,6 +100,26 @@ The Send Money page intentionally triggers a simulated payment gateway error on 
 
 See `.agents/skills/sentry-devin-alerts.md` for instructions on adding or modifying alerts.
 
+## Deployment
+
+The app is deployed at [https://sentry-integration-app-3m9l8hgb.devinapps.com](https://sentry-integration-app-3m9l8hgb.devinapps.com).
+
+To deploy a new version:
+
+1. Build the production bundle:
+
+   ```bash
+   yarn build
+   ```
+
+2. Ask Devin to deploy the app:
+
+   > Deploy the React banking app. The build folder is at `build/`.
+
+   Devin will use `deploy frontend` with the `build/` directory to push the new version to the same URL.
+
+Alternatively, you can deploy to any static hosting provider (Vercel, Netlify, S3+CloudFront, etc.) by uploading the contents of the `build/` folder. The Sentry integration works regardless of where the app is hosted — errors will be reported with `environment: production` automatically.
+
 ## Contributing
 
 If you would like to contribute, please create a new branch and submit a pull request with your changes. Review may be needed before acceptance.
