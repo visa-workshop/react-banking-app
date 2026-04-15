@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // components
 import Button from '../components/Form/Button';
 import Layout from '../components/Layout/Layout';
 import Divider from '../components/Divider/Divider';
 import Currency from '../components/Currency/Currency';
+import { useScreenLoadMonitor } from '../hooks/useScreenLoadMonitor';
 
 const Savings: React.FC = () => {
+  const setLoadComplete = useScreenLoadMonitor({ screenName: 'Savings' });
+
+  useEffect(() => {
+    setLoadComplete();
+  }, [setLoadComplete]);
+
   const [selected, setSelected] = useState<string>('');
 
   /**

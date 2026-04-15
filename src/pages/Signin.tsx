@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sentry } from '../sentry';
 
 // components
 import Input from '../components/Form/Input';
 import Button from '../components/Form/Button';
+import { useScreenLoadMonitor } from '../hooks/useScreenLoadMonitor';
 
 const Signin: React.FC = () => {
   const navigate = useNavigate();
+  const setLoadComplete = useScreenLoadMonitor({ screenName: 'Signin' });
+
+  useEffect(() => {
+    setLoadComplete();
+  }, [setLoadComplete]);
+
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
