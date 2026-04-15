@@ -9,17 +9,19 @@ import RecipientList from '../components/Send/RecipientList';
 import AmountInput from '../components/Send/AmountInput';
 import TransferConfirmation from '../components/Send/TransferConfirmation';
 import TransferSuccess from '../components/Send/TransferSuccess';
+import TransferError from '../components/Send/TransferError';
 
 // interfaces
 import type { Recipient } from '../components/Send/RecipientList';
 
-type Step = 'recipient' | 'amount' | 'confirm' | 'success';
+type Step = 'recipient' | 'amount' | 'confirm' | 'success' | 'error';
 
 const SendMoney: React.FC = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>('recipient');
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
   const [amount, setAmount] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleSelectRecipient = (recipient: Recipient): void => {
     setSelectedRecipient(recipient);
@@ -37,6 +39,7 @@ const SendMoney: React.FC = () => {
     try {
       // Simulate a transfer processing error
       processTransfer(selectedRecipient, amount);
+      setStep('success');
     } catch (error) {
       Sentry.captureException(error, {
         tags: {
@@ -50,15 +53,23 @@ const SendMoney: React.FC = () => {
           currency: 'EUR',
         },
       });
-    }
 
-    setStep('success');
+      const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+      setErrorMessage(message);
+      setStep('error');
+    }
+  };
+
+  const handleRetry = (): void => {
+    setErrorMessage('');
+    setStep('confirm');
   };
 
   const handleCancel = (): void => {
     setStep('recipient');
     setSelectedRecipient(null);
     setAmount(0);
+    setErrorMessage('');
   };
 
   const handleDone = (): void => {
@@ -94,6 +105,10 @@ const SendMoney: React.FC = () => {
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />
+      )}
+
+      {step === 'error' && (
+        <TransferError errorMessage={errorMessage} onRetry={handleRetry} onCancel={handleCancel} />
       )}
 
       {step === 'success' && selectedRecipient && (
