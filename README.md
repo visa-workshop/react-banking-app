@@ -21,7 +21,7 @@ If you like this resource, please follow me on GitHub. Thank you!
 
 ## Demo
 
-[https://react-banking-app-template.vercel.app](https://react-banking-app-template.vercel.app)
+[https://sentry-integration-app-3m9l8hgb.devinapps.com](https://sentry-integration-app-3m9l8hgb.devinapps.com)
 
 ## Screenshots
 
@@ -94,7 +94,31 @@ The Sentry DSN is configured in `src/sentry.ts`. If you fork this repository, re
 - `replaysSessionSampleRate: 0.1` - Captures 10% of all sessions for replay
 - `replaysOnErrorSampleRate: 1.0` - Captures 100% of sessions with errors for replay
 
-**Note:** The test error button on the Home page is for verifying Sentry integration and should be removed before production deployment.
+**Sentry → Devin Alert Pipeline:**
+
+The Send Money page intentionally triggers a simulated payment gateway error on form submission. This error is captured by Sentry with a `feature: send_money` tag, which triggers an alert rule that sends a webhook to a middleware service (`https://app-ixyrbrvl.fly.dev/webhook/sentry`). The webhook service then creates a Devin session to automatically investigate and triage the issue.
+
+See `.agents/skills/sentry-devin-alerts.md` for instructions on adding or modifying alerts.
+
+## Deployment
+
+The app is deployed at [https://sentry-integration-app-3m9l8hgb.devinapps.com](https://sentry-integration-app-3m9l8hgb.devinapps.com).
+
+To deploy a new version:
+
+1. Build the production bundle:
+
+   ```bash
+   yarn build
+   ```
+
+2. Ask Devin to deploy the app:
+
+   > Deploy the React banking app. The build folder is at `build/`.
+
+   Devin will use `deploy frontend` with the `build/` directory to push the new version to the same URL.
+
+Alternatively, you can deploy to any static hosting provider (Vercel, Netlify, S3+CloudFront, etc.) by uploading the contents of the `build/` folder. The Sentry integration works regardless of where the app is hosted — errors will be reported with `environment: production` automatically.
 
 ## Contributing
 
