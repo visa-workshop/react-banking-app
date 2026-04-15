@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sentry } from '../sentry';
 
@@ -12,11 +12,18 @@ import TransferSuccess from '../components/Send/TransferSuccess';
 
 // interfaces
 import type { Recipient } from '../components/Send/RecipientList';
+import { useScreenLoadMonitor } from '../hooks/useScreenLoadMonitor';
 
 type Step = 'recipient' | 'amount' | 'confirm' | 'success';
 
 const SendMoney: React.FC = () => {
   const navigate = useNavigate();
+  const setLoadComplete = useScreenLoadMonitor({ screenName: 'SendMoney' });
+
+  useEffect(() => {
+    setLoadComplete();
+  }, [setLoadComplete]);
+
   const [step, setStep] = useState<Step>('recipient');
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
   const [amount, setAmount] = useState<number>(0);

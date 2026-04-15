@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 // components
 import Saved from '../components/Add/Saved';
 import Arrow from '../components/Arrow/Arrow';
@@ -5,27 +7,36 @@ import Button from '../components/Form/Button';
 import Layout from '../components/Layout/Layout';
 import Divider from '../components/Divider/Divider';
 import Destination from '../components/Add/Destination';
+import { useScreenLoadMonitor } from '../hooks/useScreenLoadMonitor';
 
-const Add: React.FC = () => (
-  <Layout>
-    <Divider />
+const Add: React.FC = () => {
+  const setLoadComplete = useScreenLoadMonitor({ screenName: 'Add' });
 
-    <h1 className='title no-select'>Add money</h1>
+  useEffect(() => {
+    setLoadComplete();
+  }, [setLoadComplete]);
 
-    <Saved />
+  return (
+    <Layout>
+      <Divider />
 
-    <Arrow />
+      <h1 className='title no-select'>Add money</h1>
 
-    <Destination />
+      <Saved />
 
-    <Divider />
+      <Arrow />
 
-    <div className='add-buttons flex flex-space-between'>
-      <Button type='submit' text='Add money securely' tabIndex={0} />
-    </div>
+      <Destination />
 
-    <Divider />
-  </Layout>
-);
+      <Divider />
+
+      <div className='add-buttons flex flex-space-between'>
+        <Button type='submit' text='Add money securely' tabIndex={0} />
+      </div>
+
+      <Divider />
+    </Layout>
+  );
+};
 
 export default Add;
