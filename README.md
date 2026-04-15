@@ -21,7 +21,7 @@ If you like this resource, please follow me on GitHub. Thank you!
 
 ## Demo
 
-[https://react-banking-app-template.vercel.app](https://react-banking-app-template.vercel.app)
+[https://sentry-integration-app-3m9l8hgb.devinapps.com](https://sentry-integration-app-3m9l8hgb.devinapps.com)
 
 ## Screenshots
 
@@ -94,7 +94,11 @@ The Sentry DSN is configured in `src/sentry.ts`. If you fork this repository, re
 - `replaysSessionSampleRate: 0.1` - Captures 10% of all sessions for replay
 - `replaysOnErrorSampleRate: 1.0` - Captures 100% of sessions with errors for replay
 
-**Note:** The test error button on the Home page is for verifying Sentry integration and should be removed before production deployment.
+**Sentry → Devin Alert Pipeline:**
+
+The Send Money page intentionally triggers a simulated payment gateway error on form submission. This error is captured by Sentry with a `feature: send_money` tag, which triggers an alert rule that sends a webhook to a middleware service (`https://app-ixyrbrvl.fly.dev/webhook/sentry`). The webhook service then creates a Devin session to automatically investigate and triage the issue.
+
+See `.agents/skills/sentry-devin-alerts.md` for instructions on adding or modifying alerts.
 
 ## Contributing
 
