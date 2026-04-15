@@ -37,7 +37,7 @@ const SendMoney: React.FC = () => {
     if (!selectedRecipient) return;
 
     try {
-      // Simulate a transfer processing error
+      // Process the transfer
       processTransfer(selectedRecipient, amount);
       setStep('success');
     } catch (error) {
@@ -125,13 +125,16 @@ const SendMoney: React.FC = () => {
 };
 
 /**
- * Simulates transfer processing that encounters an error.
- * This intentionally throws to demonstrate Sentry error capture.
+ * Processes a money transfer to the given recipient.
+ * In a real application this would call a backend API.
  */
 function processTransfer(recipient: Recipient, amount: number): void {
-  throw new Error(
-    `Transfer failed: unable to process payment of \u20ac${amount.toFixed(2)} to ${recipient.name} (${recipient.accountInfo}). Gateway timeout after 30000ms.`
-  );
+  // Log the transfer for observability
+  Sentry.addBreadcrumb({
+    category: 'transaction',
+    message: `Transfer of \u20ac${amount.toFixed(2)} to ${recipient.name} (${recipient.accountInfo})`,
+    level: 'info',
+  });
 }
 
 export default SendMoney;
