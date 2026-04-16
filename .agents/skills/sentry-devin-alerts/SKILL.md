@@ -1,7 +1,11 @@
-# Sentry → Devin Alert Pipeline
+---
+name: sentry-devin-alerts
+description: >
+  Add or modify Sentry alert rules that automatically trigger Devin sessions
+  to investigate and triage errors in the React banking app.
+---
 
-## Description
-Add or modify Sentry alert rules that automatically trigger Devin sessions to investigate and triage errors in the React banking app.
+# Sentry → Devin Alert Pipeline
 
 ## Architecture
 
