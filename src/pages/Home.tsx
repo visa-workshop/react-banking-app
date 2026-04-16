@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { apiGet } from '../api/client';
+
 // components
 import Layout from '../components/Layout/Layout';
 import Balance from '../components/Balance/Balance';
@@ -6,22 +9,53 @@ import History from '../components/History/History';
 import Widgets from '../components/Widgets/Widgets';
 import Divider from '../components/Divider/Divider';
 
-const Home: React.FC = () => (
-  <Layout>
-    <Balance balance={1325.5} currency='EURO' currencySymbol='€' />
+interface BalanceData {
+  balance: number;
+  currency: string;
+  currency_symbol: string;
+}
 
-    <Actions />
+const Home: React.FC = () => {
+  const [balanceData, setBalanceData] = useState<BalanceData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    <Divider />
+  useEffect(() => {
+    apiGet<BalanceData>('/api/user/balance')
+      .then((data) => {
+        setBalanceData(data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
-    <History />
+  return (
+    <Layout>
+      {isLoading ? (
+        <div className='balance flex flex-col flex-v-center flex-h-center'>
+          <p className='text-shadow'>Loading...</p>
+        </div>
+      ) : (
+        <Balance
+          balance={balanceData?.balance ?? 0}
+          currency={balanceData?.currency ?? ''}
+          currencySymbol={balanceData?.currency_symbol ?? ''}
+        />
+      )}
 
-    <Divider />
+      <Actions />
 
-    <Widgets />
+      <Divider />
 
-    <Divider />
-  </Layout>
-);
+      <History />
+
+      <Divider />
+
+      <Widgets />
+
+      <Divider />
+    </Layout>
+  );
+};
 
 export default Home;

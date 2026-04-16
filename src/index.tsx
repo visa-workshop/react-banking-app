@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import { AuthProvider } from './context/AuthContext';
 import { initSentry } from './sentry';
 
 // Initialize Sentry error tracking
@@ -14,7 +15,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <ErrorBoundary>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </ErrorBoundary>
 );

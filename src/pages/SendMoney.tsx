@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sentry } from '../sentry';
+import { apiPost } from '../api/client';
 
 // components
 import Layout from '../components/Layout/Layout';
@@ -13,6 +14,11 @@ import TransferError from '../components/Send/TransferError';
 
 // interfaces
 import type { Recipient } from '../components/Send/RecipientList';
+
+interface TransferResponse {
+  success: boolean;
+  message: string;
+}
 
 type Step = 'recipient' | 'amount' | 'confirm' | 'success' | 'error';
 
@@ -33,13 +39,21 @@ const SendMoney: React.FC = () => {
     setStep('confirm');
   };
 
-  const handleConfirm = (): void => {
+  const handleConfirm = async (): Promise<void> => {
     if (!selectedRecipient) return;
 
     try {
-      // Simulate a transfer processing error
-      processTransfer(selectedRecipient, amount);
-      setStep('success');
+      const result = await apiPost<TransferResponse>('/api/transfers', {
+        recipient_id: selectedRecipient.id,
+        amount,
+      });
+
+      if (result.success) {
+        setStep('success');
+      } else {
+        setErrorMessage(result.message || 'Transfer failed');
+        setStep('error');
+      }
     } catch (error) {
       Sentry.captureException(error, {
         tags: {
@@ -123,15 +137,5 @@ const SendMoney: React.FC = () => {
     </Layout>
   );
 };
-
-/**
- * Simulates transfer processing that encounters an error.
- * This intentionally throws to demonstrate Sentry error capture.
- */
-function processTransfer(recipient: Recipient, amount: number): void {
-  throw new Error(
-    `Transfer failed: unable to process payment of \u20ac${amount.toFixed(2)} to ${recipient.name} (${recipient.accountInfo}). Gateway timeout after 30000ms.`
-  );
-}
 
 export default SendMoney;
