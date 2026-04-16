@@ -4,9 +4,18 @@ interface IProps {
   cvcNumber: string;
   validUntil: string;
   cardHolder: string;
+  balance?: number;
+  cardLimit?: number;
 }
 
-const Card: React.FC<IProps> = ({ number, cvcNumber, validUntil, cardHolder }) => (
+const Card: React.FC<IProps> = ({
+  number,
+  cvcNumber,
+  validUntil,
+  cardHolder,
+  balance,
+  cardLimit,
+}) => (
   <>
     <div className='card no-select'>
       <div className='card-inner'>
@@ -64,11 +73,11 @@ const Card: React.FC<IProps> = ({ number, cvcNumber, validUntil, cardHolder }) =
     <div className='card-balance flex flex-v-center flex-space-between'>
       <div className='flex flex-col flex-h-center flex-1 center'>
         <h3>Balance</h3>
-        <span>€ 783.45</span>
+        <span>€ {balance !== undefined ? balance.toFixed(2) : '783.45'}</span>
       </div>
       <div className='flex flex-col flex-h-center flex-1 center'>
         <h3>Limit</h3>
-        <span>€ 1250.00</span>
+        <span>€ {cardLimit !== undefined ? cardLimit.toFixed(2) : '1250.00'}</span>
       </div>
     </div>
   </>
