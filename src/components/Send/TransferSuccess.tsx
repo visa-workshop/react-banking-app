@@ -17,7 +17,7 @@ const TransferSuccess: React.FC<IProps> = ({
   <div className='flex flex-col flex-v-center flex-h-center' style={{ padding: '40px 0' }}>
     <span
       className='material-symbols-outlined'
-      style={{ fontSize: '4em', color: '#4ed34e', marginBottom: '20px' }}
+      style={{ fontSize: '4em', color: '#2E7D32', marginBottom: '20px' }}
     >
       check_circle
     </span>

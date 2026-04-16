@@ -47,7 +47,7 @@ const AmountInput: React.FC<IProps> = ({
   return (
     <form onSubmit={handleSubmit}>
       <div className='flex flex-v-center flex-h-center' style={{ margin: '30px 0' }}>
-        <span style={{ fontSize: '2.5em', fontWeight: 500, color: '#ffffff', marginRight: '10px' }}>
+        <span style={{ fontSize: '2.5em', fontWeight: 500, color: '#1A1F71', marginRight: '10px' }}>
           {currencySymbol}
         </span>
         <input
@@ -58,7 +58,7 @@ const AmountInput: React.FC<IProps> = ({
           style={{
             fontSize: '2.5em',
             fontWeight: 500,
-            color: '#ffffff',
+            color: '#1A1F71',
             background: 'transparent',
             border: 'none',
             outline: 'none',
