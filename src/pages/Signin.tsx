@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sentry } from '../sentry';
+import { useAuth } from '../context/AuthContext';
 
 // components
 import Input from '../components/Form/Input';
@@ -8,8 +9,12 @@ import Button from '../components/Form/Button';
 
 const Signin: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * Validates an email address format.
@@ -37,6 +42,17 @@ const Signin: React.FC = () => {
     const value = e.target.value;
     setEmail(value);
     setEmailError('');
+    setLoginError('');
+  };
+
+  /**
+   * Handles password input change.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The input change event.
+   */
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setPassword(e.target.value);
+    setLoginError('');
   };
 
   /**
@@ -44,7 +60,7 @@ const Signin: React.FC = () => {
    *
    * @param {React.FormEvent} e - The form submission event.
    */
-  const handleSubmit = (e: React.FormEvent): void => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     const error = validateEmail(email);
@@ -57,7 +73,18 @@ const Signin: React.FC = () => {
       return;
     }
 
-    navigate('/home', { replace: true });
+    setIsLoading(true);
+    setLoginError('');
+
+    try {
+      await login(email, password);
+      navigate('/home', { replace: true });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Login failed. Please try again.';
+      setLoginError(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -100,12 +127,19 @@ const Signin: React.FC = () => {
               tabIndex={0}
               name='password'
               type='password'
+              value={password}
               autoComplete={false}
               placeholder='Please enter your password'
+              onChange={handlePasswordChange}
             />
           </div>
+          {loginError && (
+            <div className='form-line'>
+              <p style={{ color: '#ff6b6b', fontSize: '0.9em', margin: 0 }}>{loginError}</p>
+            </div>
+          )}
           <div className='form-line'>
-            <Button type='submit' text='Sign in' tabIndex={0} />
+            <Button type='submit' text={isLoading ? 'Signing in...' : 'Sign in'} tabIndex={0} />
           </div>
         </form>
 
