@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sentry } from '../sentry';
+import { useAppContext } from '../context/AppContext';
 
 // components
 import Input from '../components/Form/Input';
@@ -8,6 +9,7 @@ import Button from '../components/Form/Button';
 
 const Signin: React.FC = () => {
   const navigate = useNavigate();
+  const { signIn } = useAppContext();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
@@ -57,6 +59,7 @@ const Signin: React.FC = () => {
       return;
     }
 
+    signIn(email);
     navigate('/home', { replace: true });
   };
 

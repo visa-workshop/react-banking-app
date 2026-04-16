@@ -701,6 +701,234 @@ footer {
   }
 }
 
+/* Insights page styles */
+.insights-card {
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.insights-card-title {
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+/* Category Breakdown - Donut Chart */
+.category-breakdown-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.donut-chart {
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.donut-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgba(25, 5, 55, 0.9);
+}
+
+.category-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85em;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+}
+
+.legend-label {
+  flex: 1;
+}
+
+.legend-value {
+  color: #999999;
+  font-size: 0.9em;
+}
+
+/* Budget Progress */
+.budget-amounts {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.budget-spent {
+  font-weight: 600;
+}
+
+.budget-total {
+  color: #999999;
+}
+
+.budget-bar-bg {
+  height: 12px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.budget-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.budget-green {
+  background-color: #4ed34e;
+}
+
+.budget-yellow {
+  background-color: #ffca0c;
+}
+
+.budget-red {
+  background-color: #f42d53;
+}
+
+.budget-percentage {
+  margin-top: 8px;
+  font-size: 0.85em;
+  color: #999999;
+}
+
+/* Spending Trend Chart */
+.spending-trend-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 140px;
+  gap: 8px;
+}
+
+.trend-bar-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.trend-bar-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.trend-bar {
+  width: 70%;
+  min-height: 4px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #ff8057, #ff571d);
+  transition: height 0.5s ease;
+}
+
+.trend-label {
+  font-size: 0.75em;
+  color: #999999;
+  margin-top: 6px;
+}
+
+/* Top Categories */
+.top-categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top-category-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-category-rank {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #999999;
+  min-width: 16px;
+  text-align: center;
+}
+
+.top-category-icon {
+  font-size: 1.3em;
+  color: #ff8057;
+}
+
+.top-category-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.top-category-name {
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.top-category-bar-bg {
+  height: 6px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.top-category-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #ff8057, #ff571d);
+}
+
+.top-category-values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 70px;
+}
+
+.top-category-amount {
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.top-category-pct {
+  font-size: 0.75em;
+  color: #999999;
+}
+
+/* Widgets grid with 4 items */
+.widgets {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 @media (max-width: 550px) {
   body,
   html,

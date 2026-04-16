@@ -5,23 +5,28 @@ import Actions from '../components/Actions/Actions';
 import History from '../components/History/History';
 import Widgets from '../components/Widgets/Widgets';
 import Divider from '../components/Divider/Divider';
+import { useAppContext } from '../context/AppContext';
 
-const Home: React.FC = () => (
-  <Layout>
-    <Balance balance={1325.5} currency='EURO' currencySymbol='€' />
+const Home: React.FC = () => {
+  const { balance } = useAppContext();
 
-    <Actions />
+  return (
+    <Layout>
+      <Balance balance={balance} currency='EURO' currencySymbol='€' />
 
-    <Divider />
+      <Actions />
 
-    <History />
+      <Divider />
 
-    <Divider />
+      <History />
 
-    <Widgets />
+      <Divider />
 
-    <Divider />
-  </Layout>
-);
+      <Widgets />
+
+      <Divider />
+    </Layout>
+  );
+};
 
 export default Home;
