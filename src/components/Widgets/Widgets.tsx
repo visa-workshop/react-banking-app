@@ -14,6 +14,10 @@ const Widgets: React.FC = () => (
       <span className='material-symbols-outlined'>savings</span>
       <p>Savings</p>
     </Link>
+    <Link to='/insights' className='widget no-select flex flex-col flex-v-center flex-h-center'>
+      <span className='material-symbols-outlined'>analytics</span>
+      <p>Insights</p>
+    </Link>
   </div>
 );
 

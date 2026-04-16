@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sentry } from '../sentry';
+import { useAppContext } from '../context/AppContext';
 
 // components
 import Layout from '../components/Layout/Layout';
@@ -12,12 +13,13 @@ import TransferSuccess from '../components/Send/TransferSuccess';
 import TransferError from '../components/Send/TransferError';
 
 // interfaces
-import type { Recipient } from '../components/Send/RecipientList';
+import type { Recipient } from '../context/AppContext';
 
 type Step = 'recipient' | 'amount' | 'confirm' | 'success' | 'error';
 
 const SendMoney: React.FC = () => {
   const navigate = useNavigate();
+  const { sendMoney, balance } = useAppContext();
   const [step, setStep] = useState<Step>('recipient');
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
   const [amount, setAmount] = useState<number>(0);
@@ -33,12 +35,11 @@ const SendMoney: React.FC = () => {
     setStep('confirm');
   };
 
-  const handleConfirm = (): void => {
+  const handleConfirm = async (): Promise<void> => {
     if (!selectedRecipient) return;
 
     try {
-      // Simulate a transfer processing error
-      processTransfer(selectedRecipient, amount);
+      await sendMoney(selectedRecipient.id, amount);
       setStep('success');
     } catch (error) {
       Sentry.captureException(error, {
@@ -93,7 +94,7 @@ const SendMoney: React.FC = () => {
       {step === 'amount' && selectedRecipient && (
         <>
           <p className='information text-shadow center'>Sending to {selectedRecipient.name}</p>
-          <AmountInput onContinue={handleAmountContinue} />
+          <AmountInput onContinue={handleAmountContinue} maxAmount={balance} />
         </>
       )}
 
@@ -123,15 +124,5 @@ const SendMoney: React.FC = () => {
     </Layout>
   );
 };
-
-/**
- * Simulates transfer processing that encounters an error.
- * This intentionally throws to demonstrate Sentry error capture.
- */
-function processTransfer(recipient: Recipient, amount: number): void {
-  throw new Error(
-    `Transfer failed: unable to process payment of \u20ac${amount.toFixed(2)} to ${recipient.name} (${recipient.accountInfo}). Gateway timeout after 30000ms.`
-  );
-}
 
 export default SendMoney;
