@@ -1,6 +1,6 @@
 {
-  "short_name": "Banking App",
-  "name": "Banking App Sample",
+  "short_name": "Visa Banking",
+  "name": "Visa Banking",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#1A1F71",
   "background_color": "#ffffff"
 }

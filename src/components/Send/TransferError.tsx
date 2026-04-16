@@ -11,7 +11,7 @@ const TransferError: React.FC<IProps> = ({ errorMessage, onRetry, onCancel }) =>
   <div className='flex flex-col flex-v-center flex-h-center' style={{ padding: '40px 0' }}>
     <span
       className='material-symbols-outlined'
-      style={{ fontSize: '4em', color: '#f42d53', marginBottom: '20px' }}
+      style={{ fontSize: '4em', color: '#D32F2F', marginBottom: '20px' }}
     >
       error
     </span>

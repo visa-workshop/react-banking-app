@@ -28,7 +28,7 @@ const RecipientList: React.FC<IProps> = ({ onSelect, selectedId = undefined }) =
         role='button'
         tabIndex={0}
         className='history-line flex flex-v-center'
-        style={selectedId === recipient.id ? { backgroundColor: 'rgba(255, 255, 255, 0.1)' } : {}}
+        style={selectedId === recipient.id ? { backgroundColor: 'rgba(26, 31, 113, 0.08)' } : {}}
         onClick={() => onSelect(recipient)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
